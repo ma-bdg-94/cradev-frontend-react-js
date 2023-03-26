@@ -17,10 +17,11 @@ import {
   DropdownItem,
   Form,
   FormGroup,
+  Button,
 } from "reactstrap";
 
-import { logoutUser } from "../../actions/auth";
-import { closeSidebar, openSidebar } from "../../actions/navigation";
+import { logoutUser } from "../../redux-store/actions/auth";
+import { closeSidebar, openSidebar } from "../../redux-store/actions/navigation";
 import MenuIcon from "../Icons/HeaderIcons/MenuIcon";
 import SearchBarIcon from "../Icons/HeaderIcons/SearchBarIcon";
 import SearchIcon from "../Icons/HeaderIcons/SearchIcon";
@@ -42,6 +43,7 @@ import "animate.css";
 
 const Header = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [newMenuOpen, setNewMenuOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   const toggleNotifications = () => {
@@ -50,6 +52,10 @@ const Header = (props) => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  }
+
+  const toggleNewMenu = () => {
+    setNewMenuOpen(!newMenuOpen);
   }
 
   const toggleSidebar = () => {
@@ -98,6 +104,17 @@ const Header = (props) => {
             <SearchIcon />
           </NavLink>
         </NavItem>
+        <Dropdown nav isOpen={newMenuOpen} toggle={() => toggleNewMenu()} className="tutorial-dropdown mr-2 mr-sm-3">
+          <DropdownToggle nav>
+            <div className={s.navbarBlock}>
+              <i className={'eva eva-plus-outline'}/>
+            </div>
+          </DropdownToggle>
+          <DropdownMenu right className="navbar-dropdown notifications-dropdown" style={{ width: "340px" }}>
+            <DropdownItem><i className={'eva eva-grid'} style={{ color: '#41d5e2' }} /><span>+ Project</span></DropdownItem>
+            <DropdownItem><i className={'eva eva-briefcase'} style={{ color: '#ff5668' }} /><span>+ Customer</span></DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
         <Dropdown nav isOpen={menuOpen} toggle={() => toggleMenu()} className="tutorial-dropdown mr-2 mr-sm-3">
           <DropdownToggle nav>
             <div className={s.navbarBlock}>

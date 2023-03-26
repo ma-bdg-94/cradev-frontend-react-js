@@ -55,14 +55,22 @@
 .logo {
   display: flex;
   align-items: center;
-  margin: 16px 0 24px;
+  margin: 16px 20px 32px;
   width: 100%;
 
   .title {
     margin-left: 12px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
+  }
+
+  .pretitle {
+    font-family: 'Fasthand', sans-serif;
+    font-size: 48px;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $info
   }
 }
 
