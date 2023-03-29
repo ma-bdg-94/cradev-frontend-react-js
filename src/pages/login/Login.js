@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Redirect, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Row,
@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget";
 import Footer from "../../components/Footer/Footer";
-import { loginUser } from "../../actions/auth";
+import { loginUser } from "../../redux-store/actions/auth";
 import hasToken from "../../services/authService";
 
 import loginImage from "../../assets/loginImage.svg";
@@ -31,9 +31,15 @@ const Login = (props) => {
     password: 'password',
   })
 
+  const dispatch = useDispatch()
+
+  const isLoading = useSelector(({ auth }) => auth.isLoading)
+  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated)
+  const error = useSelector(({ auth }) => auth.error)
+
   const doLogin = (e) => {
     e.preventDefault();
-    props.dispatch(loginUser({ password: state.password, email: state.email }))
+    dispatch(loginUser({ password: state.password, email: state.email }))
   }
 
   const changeCreds = (event) => {
@@ -128,12 +134,4 @@ Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-function mapStateToProps(state) {
-  return {
-    isFetching: state.auth.isFetching,
-    isAuthenticated: state.auth.isAuthenticated,
-    errorMessage: state.auth.errorMessage,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Login));
+export default withRouter(Login);

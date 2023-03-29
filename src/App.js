@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router";
 import { HashRouter } from "react-router-dom";
 
 // -- Redux
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 // -- Custom Components
 import LayoutComponent from "./components/Layout/Layout";
@@ -13,7 +13,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 
 // -- Redux Actions
-import { logoutUser } from "./actions/auth";
+import { logoutUser } from "./redux-store/actions/auth";
 
 // -- Third Party Libs
 import { ToastContainer } from "react-toastify";
@@ -24,7 +24,9 @@ import isAuthenticated from "./services/authService";
 // -- Component Styles
 import "./styles/app.scss";
 
-const PrivateRoute = ({ dispatch, component, ...rest }) => {
+const PrivateRoute = ({ component, ...rest }) => {
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated)
   if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
     dispatch(logoutUser());
     return (<Redirect to="/login" />)
@@ -55,8 +57,4 @@ const App = (props) => {
   );
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

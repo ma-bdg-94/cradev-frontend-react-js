@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Redirect, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Row,
@@ -21,11 +21,17 @@ import TwitterIcon from "../../components/Icons/AuthIcons/TwitterIcon.js";
 import FacebookIcon from "../../components/Icons/AuthIcons/FacebookIcon.js";
 import GithubIcon from "../../components/Icons/AuthIcons/GithubIcon.js";
 import LinkedinIcon from "../../components/Icons/AuthIcons/LinkedinIcon.js";
-import { registerUser } from "../../actions/register.js";
+import { registerUser } from "../../redux-store/actions/register.js";
 import hasToken from "../../services/authService";
 
 const Register = (props) => {
   const [state, setState] = useState({ email: '', password: ''} )
+
+  const dispatch = useDispatch()
+
+  const isLoading = useSelector(({ auth }) => auth.isLoading)
+  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated)
+  const error = useSelector(({ auth }) => auth.error)
 
   const changeCred = (event) => {
     setState({ ...state, [event.target.name]: event.target.value })
@@ -33,7 +39,7 @@ const Register = (props) => {
 
   const doRegister = (event) => {
     event.preventDefault();
-    props.dispatch(registerUser({
+    dispatch(registerUser({
       creds: state,
       history: props.history,
     }))
@@ -123,16 +129,4 @@ const Register = (props) => {
   )
 }
 
-Register.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    isFetching: state.auth.isFetching,
-    isAuthenticated: state.auth.isAuthenticated,
-    errorMessage: state.auth.errorMessage,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Register));
+export default withRouter(Register);
