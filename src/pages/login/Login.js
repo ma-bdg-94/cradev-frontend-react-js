@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Redirect, Link } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form"
 import {
   Container,
   Row,
@@ -13,7 +14,7 @@ import {
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget";
 import Footer from "../../components/Footer/Footer";
-import { loginUser } from "../../redux-store/actions/auth";
+import { loginUser } from "../../redux-store/slices/auth.slice";
 import hasToken from "../../services/authService";
 
 import loginImage from "../../assets/loginImage.svg";
@@ -37,9 +38,12 @@ const Login = (props) => {
   const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated)
   const error = useSelector(({ auth }) => auth.error)
 
-  const doLogin = (e) => {
-    e.preventDefault();
+  const { register, handleSubmit } = useForm()
+
+  const onSubmit = (e) => {
+    //e.preventDefault();
     dispatch(loginUser({ password: state.password, email: state.email }))
+    console.log({ password: state.password, email: state.email })
   }
 
   const changeCreds = (event) => {
@@ -69,7 +73,7 @@ const Login = (props) => {
               <div className="auth-info my-2">
                 <p>This is a real app with Node.js backend - use <b>"admin@flatlogic.com / password"</b> to login!</p>
               </div>
-              <form onSubmit={(event) => doLogin(event)}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <FormGroup className="my-3">
                   <FormText>Email</FormText>
                   <Input
@@ -81,6 +85,7 @@ const Login = (props) => {
                     required
                     name="email"
                     placeholder="Email"
+                    {...register("email")}
                   />
                 </FormGroup>
                 <FormGroup  className="my-3">
@@ -97,6 +102,7 @@ const Login = (props) => {
                     required
                     name="password"
                     placeholder="Password"
+                    {...register("password")}
                   />
                 </FormGroup>
                 <div className="bg-widget d-flex justify-content-center">

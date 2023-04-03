@@ -74,7 +74,7 @@ export const userSlice = createSlice({
       .addCase(addUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;
-        [...state.userList, payload];
+        state.userList = [...state.userList, payload];
       })
       .addCase(addUser.rejected, (state, { payload }) => {
         state.isLoading = false;

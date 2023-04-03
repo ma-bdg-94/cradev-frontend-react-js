@@ -27,7 +27,7 @@ import "./styles/app.scss";
 const PrivateRoute = ({ component, ...rest }) => {
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated)
-  if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
+  if (!isAuthenticated) {
     dispatch(logoutUser());
     return (<Redirect to="/login" />)
   } else {

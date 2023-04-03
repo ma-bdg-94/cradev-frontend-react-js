@@ -1,0 +1,28 @@
+@import "../../styles/helpers";
+
+.header-bearer {
+  justify-content: space-between !important;
+  align-items: center !important;
+  .logo {
+    display: flex;
+    align-items: center;
+    margin: 32px 20px 16px;
+    width: 100%;
+    justify-content: flex-end;
+
+    .title {
+      margin-left: 12px;
+      font-size: 24px;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+
+    .pretitle {
+      font-family: "Fasthand", sans-serif;
+      font-size: 48px;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+      color: $info;
+    }
+  }
+}

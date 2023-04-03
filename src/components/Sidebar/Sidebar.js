@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup.js";
-import { changeActiveSidebarItem } from "../../redux-store/actions/navigation.js";
+import { changeActiveSidebarItem } from "../../redux-store/slices/navigation.slice";
 import cn from "classnames";
 
 const Sidebar = (props) => {
 
-  const {
-    activeItem = '',
-    ...restProps
-  } = props;
+  // const {
+  //   activeItem = '',
+  //   ...restProps
+  // } = props;
+
+  const dispatch = useDispatch()
+
+  const sidebarOpened = useSelector(({ navigation }) => navigation.sidebarOpened)
+  const activeItem = useSelector(({ navigation }) => navigation.activeItem)
 
   const [burgerSidebarOpen, setBurgerSidebarOpen] = useState(false)
 
   useEffect(() => {
-    if (props.sidebarOpened) {
+    if (sidebarOpened) {
       setBurgerSidebarOpen(true)
     } else {
       setTimeout(() => {
         setBurgerSidebarOpen(false)
       }, 0);
     }
-  }, [props.sidebarOpened])
+  }, [sidebarOpened])
 
   return (
     <nav className={cn(s.root, { [s.sidebarOpen]: burgerSidebarOpen })} >
@@ -35,8 +40,8 @@ const Sidebar = (props) => {
       </header>
       <ul className={s.nav}>
         <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
+          onActiveSidebarItemChange={activeItem => dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={activeItem}
           header="Dashboard"
           isHeader
           iconName={<i className={'eva eva-home-outline'} />}
@@ -45,8 +50,8 @@ const Sidebar = (props) => {
         />
         <h5 className={s.navTitle}>Application</h5>
         <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
+          onActiveSidebarItemChange={activeItem => dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={activeItem}
           header="Projects"
           isHeader
           iconName={<i className={'eva eva-grid-outline'} />}
@@ -54,8 +59,8 @@ const Sidebar = (props) => {
           index="typography"
         />
         <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
+          onActiveSidebarItemChange={activeItem => dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={activeItem}
           header="Clients"
           isHeader
           iconName={<i className={'eva eva-briefcase-outline'} />}
@@ -63,8 +68,8 @@ const Sidebar = (props) => {
           index="tables"
         />
         <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
+          onActiveSidebarItemChange={activeItem => dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={activeItem}
           header="Notifications"
           isHeader
           iconName={<i className={'eva eva-bell-outline'} />}
@@ -73,8 +78,8 @@ const Sidebar = (props) => {
         />
         <h5 className={s.navTitle}>Activity Timesheet</h5>
         <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
+          onActiveSidebarItemChange={activeItem => dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={activeItem}
           header="Activity Report"
           isHeader
           iconName={<i className={'eva eva-calendar-outline'} />}
@@ -95,11 +100,4 @@ Sidebar.propTypes = {
   }).isRequired,
 }
 
-function mapStateToProps(store) {
-  return {
-    sidebarOpened: store.navigation.sidebarOpened,
-    activeItem: store.navigation.activeItem,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Sidebar));
+export default withRouter(Sidebar);

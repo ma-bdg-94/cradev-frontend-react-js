@@ -1,0 +1,25 @@
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  cursor: pointer !important;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+// .upload-btn-wrapper Button {
+//   color: white;
+//   background-color: #007bff;
+//   padding: 10px 20px;
+//   border-radius: 5px;
+//   font-size: 16px;
+//   font-weight: bold;
+//   cursor: pointer;
+// }
