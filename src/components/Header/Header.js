@@ -20,8 +20,8 @@ import {
   Button,
 } from "reactstrap";
 
-import { logoutUser } from "../../redux-store/actions/auth";
-import { closeSidebar, openSidebar } from "../../redux-store/actions/navigation";
+import { logoutUser } from "../../redux-store/slices/auth.slice";
+import { closeSidebar, openSidebar } from "../../redux-store/slices/navigation.slice";
 import MenuIcon from "../Icons/HeaderIcons/MenuIcon";
 import SearchBarIcon from "../Icons/HeaderIcons/SearchBarIcon";
 import SearchIcon from "../Icons/HeaderIcons/SearchIcon";

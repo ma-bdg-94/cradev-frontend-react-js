@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { Button, Input } from "reactstrap";
 import "./fileUploader.scss";
 
-const FileUploader = ({ content, onChange, icon }) => {
+const FileUploader = ({ content, onChange, ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileSelect = event => {
